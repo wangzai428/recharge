@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.recharge.service.mapper.PhoneMapper">
+    <resultMap id="phoneEntity" type="cn.com.recharge.entity.PhoneEntity">
+        <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result column="phone" property="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="province" property="province" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="city" property="city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="zip_code" property="zipCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="operator" property="operator" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="area_code" property="areaCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="description" property="description" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="phone_columns">
+        id,phone,province,city,zip_code,operator,area_code,description
+    </sql>
+    <insert id="insert" parameterType="cn.com.recharge.entity.PhoneEntity" keyColumn="id" useGeneratedKeys="true">
+        insert into phone(phone,province,city,zip_code,operator,area_code,description)
+        values(#{phone},#{province},#{city},#{zipCode},#{operator},#{areaCode},#{description})
+    </insert>
+    <select id="selectByPhone" resultMap="phoneEntity">
+        select <include refid="phone_columns"/> from phone where phone=#{phone}
+    </select>
+    <select id="selectByPhoneList" resultMap="phoneEntity">
+        select <include refid="phone_columns"/> from phone where phone in
+        <foreach collection="list" item="phone" open="(" separator="," close=")">
+            #{phone}
+        </foreach>
+    </select>
+    <select id="selectById" resultMap="phoneEntity">
+        select <include refid="phone_columns"/> from phone where id=#{id}
+    </select>
+    <select id="findMaxPhone" resultType="string">
+        select max(phone) from phone
+    </select>
+</mapper>
