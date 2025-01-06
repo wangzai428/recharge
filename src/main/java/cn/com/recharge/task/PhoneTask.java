@@ -56,7 +56,7 @@ public class PhoneTask {
                     PhoneEntity phoneEntity = getPhoneEntity(phone);
                     log.info("phoneEntity:{}", phoneEntity);
                     phoneService.create(phoneEntity);
-                    Thread.sleep(5000);
+                    Thread.sleep(3000);
                 } catch (Exception e) {
                     log.error("phone:{}", phone, e);
                 }
